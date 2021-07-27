@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "presence_camp",
+    "name": "Ideation Camp UJKZ",
     "slug": "c-ideation-app",
     "version": "0.0.1",
     "orientation": "portrait",
@@ -17,7 +17,9 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.incubuo.c-ideation-app",
+      "buildNumber": "0.0.1"
     },
     "web": {
       "favicon": "./assets/favicon.png"
