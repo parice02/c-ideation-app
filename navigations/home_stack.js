@@ -21,6 +21,7 @@ class MyStack extends React.Component {
       <Stack.Navigator
         screenOptions={({ route, navigation }) => ({
           headerTitleAlign: "center",
+          headerTintColor: "white",
           headerStyle: {
             elevation: 10,
             backgroundColor: colors.maincolor,

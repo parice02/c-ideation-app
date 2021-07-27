@@ -8,7 +8,6 @@ import { moderateScale } from "react-native-size-matters";
 import * as FileSystem from "expo-file-system";
 import * as MediaLibrary from "expo-media-library";
 import moment from "moment";
-
 import xlsx from "xlsx";
 
 import VisitorList from "../pages/visitor_list";
@@ -18,23 +17,32 @@ const icon_size = moderateScale(20);
 
 const get_media_permission = async () => {
   const { granted } = await MediaLibrary.requestPermissionsAsync();
-  
+
   return granted;
 };
 
 const save_file = async (file) => {
+  console.log("getting album");
   const directory = await MediaLibrary.getAlbumAsync(
     "Ideation Camp/Sauvegardes"
   );
+  console.log("get album ok");
+  console.log("creating asset");
+  console.log(file);
   const asset = await MediaLibrary.createAssetAsync(file);
+  console.log("asset created");
   if (directory) {
+    console.log("adding asset to album");
     await MediaLibrary.addAssetsToAlbumAsync(asset, directory, false);
+    console.log("asset added to album");
   } else {
+    console.log("creating album and adding asset");
     await MediaLibrary.createAlbumAsync(
       "Ideation Camp/Sauvegardes",
       asset,
       false
     );
+    console.log("album created and asset added in it");
   }
 };
 
@@ -60,7 +68,7 @@ class MyStack extends React.Component {
         xlsx.utils.book_append_sheet(
           xlsx_book,
           xlsx_data_sheet,
-          "liste de présence"
+          "Liste_de_presence"
         );
 
         const written_book = xlsx.write(xlsx_book, {
@@ -70,10 +78,10 @@ class MyStack extends React.Component {
           cellStyles: true,
         });
 
-        const uri =
-          FileSystem.documentDirectory +
-          `liste de présence du ${moment().format("LL")}.xlsx`;
+        const uri = FileSystem.cacheDirectory + `Liste_de_presence.xlsx`;
+        console.log("Saving");
         await save_file(uri);
+        console.log("Saved");
       }
     }
     this.setState({
@@ -89,6 +97,7 @@ class MyStack extends React.Component {
       <Stack.Navigator
         screenOptions={({ route, navigation }) => ({
           headerTitleAlign: "center",
+          headerTintColor: "white",
           headerStyle: {
             backgroundColor: "#fff",
             elevation: 10,

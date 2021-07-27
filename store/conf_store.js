@@ -1,6 +1,6 @@
 import { createStore } from "redux";
 import { persistCombineReducers } from "redux-persist";
-import AsyncStorage from "@react-native-community/async-storage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import constants from "./reducers/constants";
 import visitor_list from "./reducers/visitor_list";

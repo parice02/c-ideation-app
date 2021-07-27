@@ -23,7 +23,7 @@
       "favicon": "./assets/favicon.png"
     },
     "android": {
-      "package": "bf.zmp.c_ideation_app",
+      "package": "com.incubuo.c_ideation_app",
       "versionCode": 1,
       "permissions": [
         "READ_EXTERNAL_STORAGE",

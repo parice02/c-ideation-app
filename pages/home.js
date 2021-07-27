@@ -3,7 +3,6 @@ import { StyleSheet, StatusBar, Button } from "react-native";
 import { Block } from "expo-ui-kit";
 import { connect } from "react-redux";
 
-
 class Home extends React.Component {
   render() {
     const { navigation, constants } = this.props;
@@ -19,6 +18,7 @@ class Home extends React.Component {
         <Block center middle>
           <Button
             title={"Press to Scan"}
+            color={colors.maincolor}
             onPress={() => navigation.navigate("qr_stack")}
           />
         </Block>
