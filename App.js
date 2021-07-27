@@ -1,46 +1,21 @@
-import React from "react";
-import { StyleSheet, Text, View } from "react-native";
-import { NavigationContainer } from "@react-navigation/native";
-import * as SplashScreen from "expo-splash-screen";
-import { Provider as PaperProvider } from "react-native-paper";
-import { Provider } from "react-redux";
-import { persistStore } from "redux-persist";
-import { PersistGate } from "redux-persist/es/integration/react";
+import { StatusBar } from 'expo-status-bar';
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
 
-import Drawer from "./navigations/principal";
-import Store from "./store/conf_store";
-
-export default class App extends React.Component {
-  state = { loading: true };
-
-  async componentDidMount() {
-    try {
-      await SplashScreen.preventAutoHideAsync();
-    } catch (e) {
-      console.warn(e);
-    }
-    this.setState({ loading: false }, async () => {
-      await SplashScreen.hideAsync();
-    });
-  }
-
-  render() {
-    if (this.state.loading) {
-      return <></>;
-    }
-
-    const persistor = persistStore(Store);
-    //persistor.purge();
-    return (
-      <Provider store={Store}>
-        <PersistGate persistor={persistor}>
-          <PaperProvider>
-            <NavigationContainer>
-              <Drawer />
-            </NavigationContainer>
-          </PaperProvider>
-        </PersistGate>
-      </Provider>
-    );
-  }
+export default function App() {
+  return (
+    <View style={styles.container}>
+      <Text>Open up App.js to start working on your app!</Text>
+      <StatusBar style="auto" />
+    </View>
+  );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});

@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Ideation Camp UJKZ",
-    "slug": "c-ideation-app",
+    "slug": "ideation-camp-app",
     "version": "0.0.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -21,9 +21,6 @@
       "bundleIdentifier": "com.incubuo.c-ideation-app",
       "buildNumber": "0.0.1"
     },
-    "web": {
-      "favicon": "./assets/favicon.png"
-    },
     "android": {
       "package": "com.incubuo.c_ideation_app",
       "versionCode": 1,
@@ -31,7 +28,14 @@
         "READ_EXTERNAL_STORAGE",
         "WRITE_EXTERNAL_STORAGE",
         "INTERNET"
-      ]
+      ],
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#FFFFFF"
+      }
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
     }
   }
 }
