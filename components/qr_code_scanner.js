@@ -35,7 +35,7 @@ class QRScanner extends React.Component {
         let _data = JSON.parse(data);
         if (
           _data.api !== undefined &&
-          _data.api === "ideation_camp_2021" &&
+          _data.api === "ideation_camp_ujkz" &&
           _data.id !== undefined
         ) {
           _data.arrived_at = moment().unix();

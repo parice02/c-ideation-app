@@ -18,6 +18,7 @@ const icon_size = moderateScale(20);
 
 const get_media_permission = async () => {
   const { granted } = await MediaLibrary.requestPermissionsAsync();
+  
   return granted;
 };
 
