@@ -11,7 +11,7 @@ import { connect } from "react-redux";
 import moment from "moment";
 
 import Card from "../components/card";
-import { data } from "../data/data";
+
 
 class Other extends React.Component {
   state = { loading: false };
