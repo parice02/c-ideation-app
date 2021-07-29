@@ -18,7 +18,7 @@ class Tabs extends React.Component {
       <Tab.Navigator
         //screenOptions={({ route }) => ({})}
         tabBarOptions={{
-          activeTintColor: colors.maincolor,
+          activeTintColor: colors.danger,
           inactiveTintColor: "darkgray",
         }}
       >

@@ -8,6 +8,7 @@ import { Ionicons } from "@expo/vector-icons";
 
 import Home from "./tabs";
 import VisitorListStack from "./visitor_lis_stack";
+import TrainingStack from "./training_stack";
 import DrawerMenu from "../components/drawer_content";
 
 const Drawer = createDrawerNavigator();
@@ -25,7 +26,11 @@ class MyDrawer extends React.Component {
     return (
       <LinearGradient
         style={{ flex: 1 }}
-        colors={[Color(colors.maincolor).hex(), Color(colors.maincolor).hex()]}
+        colors={[
+          Color("yellow").lighten(0.7).hex(),
+          Color("yellow").lighten(0.5).hex(),
+          Color("yellow").lighten(0.2).hex(),
+        ]}
       >
         <Drawer.Navigator
           drawerType={"back"}
@@ -75,6 +80,21 @@ class MyDrawer extends React.Component {
             }}
           >
             {(props) => <VisitorListStack {...props} />}
+          </Drawer.Screen>
+          <Drawer.Screen
+            name="formation_drawer"
+            options={{
+              drawerLabel: "Les formations",
+              drawerIcon: ({ focused, size, color }) => (
+                <Ionicons
+                  name={focused ? "list" : "list-outline"}
+                  size={size}
+                  color={color}
+                />
+              ),
+            }}
+          >
+            {(props) => <TrainingStack {...props} />}
           </Drawer.Screen>
         </Drawer.Navigator>
       </LinearGradient>

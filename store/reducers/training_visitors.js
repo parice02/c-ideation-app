@@ -1,9 +1,9 @@
 //const initial = [{ food: "", price: "", quantity: "", total_price: "" }];
 const initial = [];
 
-function visitor_list(state = initial, action) {
+function training_visitors(state = initial, action) {
   switch (action.type) {
-    case "add_visitor":
+    case "add_training_visitor":
       return [...state, action.value] || state;
     case "DELETE_ALL_VISITES":
       return initial;
@@ -12,4 +12,4 @@ function visitor_list(state = initial, action) {
   }
 }
 
-export default visitor_list;
+export default training_visitors;

@@ -8,10 +8,11 @@ import {
 } from "react-native";
 import { Block, Text } from "expo-ui-kit";
 import { connect } from "react-redux";
+import { Divider } from "react-native-paper";
 import moment from "moment";
+import "moment/locale/fr";
 
 import Card from "../components/card";
-
 
 class Other extends React.Component {
   state = { loading: false };
@@ -26,7 +27,7 @@ class Other extends React.Component {
 
   on_refreshing = () => {};
 
-  render_separator = () => <View style={styles.separator} />;
+  render_separator = () => <Divider />;
 
   render_empty_list = () => (
     <Text middle center h2>
@@ -68,10 +69,6 @@ class Other extends React.Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  separator: { borderBottomWidth: 0.3, borderBottomColor: "black" },
-});
 
 const mapStateToProps = (state) => {
   return {

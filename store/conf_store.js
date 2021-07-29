@@ -4,6 +4,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import constants from "./reducers/constants";
 import visitor_list from "./reducers/visitor_list";
+import training_list from "./reducers/training_list";
+import training_visitors from "./reducers/training_visitors";
 
 const persist_config = {
   key: "root",
@@ -14,5 +16,7 @@ export default createStore(
   persistCombineReducers(persist_config, {
     constants,
     visitor_list,
+    training_list,
+    training_visitors,
   })
 );

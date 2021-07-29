@@ -1,10 +1,13 @@
 import React from "react";
-import { StyleSheet, View, Dimensions } from "react-native";
+import { StyleSheet, View, Dimensions, Image } from "react-native";
 import {
   DrawerContentScrollView,
   DrawerItemList,
 } from "@react-navigation/drawer";
 import { connect } from "react-redux";
+import Color from "color";
+
+const logo_uri = require("../assets/icon.png");
 
 class DrawerMenu extends React.Component {
   render() {
@@ -13,12 +16,13 @@ class DrawerMenu extends React.Component {
 
     return (
       <DrawerContentScrollView style={{ flex: 1 }} {...this.props}>
-        <View
-          style={[
-            styles_header.container,
-            { backgroundColor: colors.maincolor },
-          ]}
-        ></View>
+        <View style={[styles_header.container]}>
+          {/* <Image
+            source={logo_uri}
+            resizeMode={"center"}
+            style={{ flex: 1, height: 200 }}
+          /> */}
+        </View>
         <DrawerItemList {...this.props} style={{ flex: 1 }} />
       </DrawerContentScrollView>
     );

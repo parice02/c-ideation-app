@@ -8,6 +8,7 @@ import { moderateScale } from "react-native-size-matters";
 import * as FileSystem from "expo-file-system";
 import * as MediaLibrary from "expo-media-library";
 import moment from "moment";
+import "moment/locale/fr";
 import xlsx from "xlsx";
 
 import VisitorList from "../pages/visitor_list";
@@ -22,27 +23,18 @@ const get_media_permission = async () => {
 };
 
 const save_file = async (file) => {
-  console.log("getting album");
   const directory = await MediaLibrary.getAlbumAsync(
     "Ideation Camp/Sauvegardes"
   );
-  console.log("get album ok");
-  console.log("creating asset");
-  console.log(file);
   const asset = await MediaLibrary.createAssetAsync(file);
-  console.log("asset created");
   if (directory) {
-    console.log("adding asset to album");
     await MediaLibrary.addAssetsToAlbumAsync(asset, directory, false);
-    console.log("asset added to album");
   } else {
-    console.log("creating album and adding asset");
     await MediaLibrary.createAlbumAsync(
       "Ideation Camp/Sauvegardes",
       asset,
       false
     );
-    console.log("album created and asset added in it");
   }
 };
 
@@ -61,14 +53,20 @@ class MyStack extends React.Component {
   export_data = async () => {
     if (await get_media_permission()) {
       this.setState({ loading: true });
-      const { visitor_list } = this.props;
+      const { visitor_list, training_visitors } = this.props;
       if (visitor_list.length !== 0) {
-        const xlsx_data_sheet = xlsx.utils.json_to_sheet(visitor_list);
+        const xlsx_data_sheet_1 = xlsx.utils.json_to_sheet(visitor_list);
+        const xlsx_data_sheet_2 = xlsx.utils.json_to_sheet(training_visitors);
         const xlsx_book = xlsx.utils.book_new();
         xlsx.utils.book_append_sheet(
           xlsx_book,
-          xlsx_data_sheet,
-          "Liste_de_presence"
+          xlsx_data_sheet_1,
+          "Présence au camp"
+        );
+        xlsx.utils.book_append_sheet(
+          xlsx_book,
+          xlsx_data_sheet_2,
+          `Presence aux formations`
         );
 
         const written_book = xlsx.write(xlsx_book, {
@@ -77,11 +75,16 @@ class MyStack extends React.Component {
           cellDates: true,
           cellStyles: true,
         });
+        const _date = moment().format("LLL");
+        const uri =
+          FileSystem.documentDirectory + `Liste de presence  du ${_date}.xlsx`;
 
-        const uri = FileSystem.cacheDirectory + `Liste_de_presence.xlsx`;
-        console.log("Saving");
+        FileSystem.writeAsStringAsync(uri, written_book, {
+          encoding: FileSystem.EncodingType.Base64,
+        });
+
         await save_file(uri);
-        console.log("Saved");
+        Alert.alert("Message", "Sauvegarde réussit");
       }
     }
     this.setState({
@@ -147,6 +150,7 @@ const mapStateToProps = (state) => {
     ...state,
     constants: state.constants,
     visitor_list: state.visitor_list,
+    training_visitors: state.training_visitors,
   };
 };
 

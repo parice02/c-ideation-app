@@ -5,8 +5,9 @@ import { Ionicons } from "react-native-vector-icons";
 import { connect } from "react-redux";
 import { moderateScale } from "react-native-size-matters";
 
-import Home from "../pages/home";
-import QRCode from "../components/qr_code_scanner";
+import Trainings from "../pages/training";
+import TrainingScan from "../pages/training_scan";
+import TrainingQRCode from "../components/qr_code_scanner";
 
 const icon_size = moderateScale(20);
 
@@ -32,13 +33,13 @@ class MyStack extends React.Component {
               margin
               transparent
               onPress={() =>
-                route.name === "home_stack"
+                route.name === "list_formation"
                   ? navigation.toggleDrawer()
                   : navigation.goBack()
               }
             >
               <Ionicons
-                name={route.name === "home_stack" ? "menu" : "arrow-back"}
+                name={route.name === "list_formation" ? "menu" : "arrow-back"}
                 color={"white"}
                 size={icon_size}
               />
@@ -47,14 +48,19 @@ class MyStack extends React.Component {
         })}
       >
         <Stack.Screen
-          name="home_stack"
-          component={Home}
-          options={{ title: "Home" }}
+          name="list_formation"
+          component={Trainings}
+          options={{ title: "Les formations" }}
         />
         <Stack.Screen
-          name="qr_stack"
-          component={QRCode}
-          options={{ title: "QRCode Scanner", headerShown: false }}
+          name="training_scan"
+          component={TrainingScan}
+          //options={{ title: "Les formations" }}
+        />
+        <Stack.Screen
+          name="training_qrcode"
+          component={TrainingQRCode}
+          options={{ headerShown: false }}
         />
       </Stack.Navigator>
     );

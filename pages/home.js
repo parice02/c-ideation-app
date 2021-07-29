@@ -4,8 +4,10 @@ import { Block } from "expo-ui-kit";
 import { connect } from "react-redux";
 
 class Home extends React.Component {
+  on_press = () => this.props.navigation.navigate("qr_stack");
+
   render() {
-    const { navigation, constants } = this.props;
+    const { constants } = this.props;
     const { colors } = constants;
 
     return (
@@ -19,24 +21,13 @@ class Home extends React.Component {
           <Button
             title={"Press to Scan"}
             color={colors.maincolor}
-            onPress={() => navigation.navigate("qr_stack")}
+            onPress={this.on_press}
           />
         </Block>
       </Block>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  button: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-});
 
 const mapStateToProps = (state) => {
   return {
