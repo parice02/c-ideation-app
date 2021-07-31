@@ -23,7 +23,7 @@ class MyStack extends React.Component {
           headerTitleAlign: "center",
           headerTintColor: "white",
           headerStyle: {
-            elevation: 10,
+            elevation: 0,
             backgroundColor: colors.maincolor,
           },
           headerLeft: () => (
@@ -51,11 +51,7 @@ class MyStack extends React.Component {
           component={Home}
           options={{ title: "Home" }}
         />
-        <Stack.Screen
-          name="qr_stack"
-          component={QRCode}
-          options={{ title: "QRCode Scanner", headerShown: false }}
-        />
+        <Stack.Screen name="qr_stack" component={QRCode} />
       </Stack.Navigator>
     );
   }

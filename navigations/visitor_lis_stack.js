@@ -7,6 +7,8 @@ import { connect } from "react-redux";
 import { moderateScale } from "react-native-size-matters";
 import * as FileSystem from "expo-file-system";
 import * as MediaLibrary from "expo-media-library";
+import * as MailComposer from "expo-mail-composer";
+import NetInfo from "@react-native-community/netinfo";
 import moment from "moment";
 import "moment/locale/fr";
 import xlsx from "xlsx";
@@ -18,8 +20,32 @@ const icon_size = moderateScale(20);
 
 const get_media_permission = async () => {
   const { granted } = await MediaLibrary.requestPermissionsAsync();
-
   return granted;
+};
+
+const send_by_mail = (file) => {
+  NetInfo.fetch().then(async ({ isConnected, isInternetReachable }) => {
+    if (isConnected && isInternetReachable) {
+      const available = await MailComposer.isAvailableAsync();
+      if (available) {
+        const result = await MailComposer.composeAsync({
+          recipients: ["djenesidibe93@gmail.com"],
+          ccRecipients: ["parice02@hotmail.com"],
+          subject: "Liste de présence aux camps d'idéation 2021",
+          body: "Recevez en pièce joint la liste de présence au camp d'idéation 2021.\n Cordialement",
+          isHtml: false,
+          attachments: [file],
+        });
+      } else {
+        Alert.alert("Info", "Impossible d'utiliser l'application mail.");
+      }
+    } else {
+      Alert.alert(
+        "Info",
+        "Vous n'êtes pas connecté à Internet. Veuillez vous connectez et recommencer."
+      );
+    }
+  });
 };
 
 const save_file = async (file) => {
@@ -54,20 +80,26 @@ class MyStack extends React.Component {
     if (await get_media_permission()) {
       this.setState({ loading: true });
       const { visitor_list, training_visitors } = this.props;
-      if (visitor_list.length !== 0) {
-        const xlsx_data_sheet_1 = xlsx.utils.json_to_sheet(visitor_list);
-        const xlsx_data_sheet_2 = xlsx.utils.json_to_sheet(training_visitors);
+      if (visitor_list.length !== 0 || training_visitors.length !== 0) {
         const xlsx_book = xlsx.utils.book_new();
-        xlsx.utils.book_append_sheet(
-          xlsx_book,
-          xlsx_data_sheet_1,
-          "Présence au camp"
-        );
-        xlsx.utils.book_append_sheet(
-          xlsx_book,
-          xlsx_data_sheet_2,
-          `Presence aux formations`
-        );
+
+        if (visitor_list.length !== 0) {
+          const xlsx_data_sheet_1 = xlsx.utils.json_to_sheet(visitor_list);
+          xlsx.utils.book_append_sheet(
+            xlsx_book,
+            xlsx_data_sheet_1,
+            "Présence au camp"
+          );
+        }
+
+        if (training_visitors.length !== 0) {
+          const xlsx_data_sheet_2 = xlsx.utils.json_to_sheet(training_visitors);
+          xlsx.utils.book_append_sheet(
+            xlsx_book,
+            xlsx_data_sheet_2,
+            `Presence aux formations`
+          );
+        }
 
         const written_book = xlsx.write(xlsx_book, {
           type: "base64",
@@ -83,8 +115,10 @@ class MyStack extends React.Component {
           encoding: FileSystem.EncodingType.Base64,
         });
 
-        await save_file(uri);
+        //await save_file(uri);
+        await MediaLibrary.saveToLibraryAsync(uri);
         Alert.alert("Message", "Sauvegarde réussit");
+        //send_by_mail(uri);
       }
     }
     this.setState({

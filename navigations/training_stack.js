@@ -57,11 +57,7 @@ class MyStack extends React.Component {
           component={TrainingScan}
           //options={{ title: "Les formations" }}
         />
-        <Stack.Screen
-          name="training_qrcode"
-          component={TrainingQRCode}
-          options={{ headerShown: false }}
-        />
+        <Stack.Screen name="training_qrcode" component={TrainingQRCode} />
       </Stack.Navigator>
     );
   }

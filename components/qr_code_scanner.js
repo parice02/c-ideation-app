@@ -1,10 +1,12 @@
 import React from "react";
-import { StyleSheet, Alert } from "react-native";
+import { StyleSheet, Alert, Dimensions } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { Block, Text } from "expo-ui-kit";
 import { connect } from "react-redux";
 import moment from "moment";
 import "moment/locale/fr";
+
+const { width, height } = Dimensions.get("window");
 
 class QRScanner extends React.Component {
   _is_mounted = false;
@@ -22,6 +24,11 @@ class QRScanner extends React.Component {
   componentDidMount() {
     this._is_mounted = true;
     this._is_mounted && this.get_permission();
+    this.props.navigation.setOptions({
+      title: null,
+      headerShown: false,
+      //headerTransparent: true,
+    });
   }
 
   componentWillUnmount() {
@@ -94,17 +101,16 @@ class QRScanner extends React.Component {
   render() {
     const { has_permission, has_scanned } = this.state;
     return (
-      <Block flex>
+      <Block>
         {has_permission ? (
           <BarCodeScanner
-            type={BarCodeScanner.Constants.Type.back}
             barCodeTypes={[BarCodeScanner.Constants.BarCodeType.qr]}
-            onBarCodeScanned={has_scanned ? null : this.handle_scanner}
-            style={[StyleSheet.absoluteFillObject, { flex: 1 }]}
+            onBarCodeScanned={has_scanned ? undefined : this.handle_scanner}
+            style={[StyleSheet.absoluteFill]}
           />
         ) : (
           <Block center middle>
-            <Text h2>Need your permission to scan</Text>
+            <Text h1>Need your permission to scan</Text>
           </Block>
         )}
       </Block>

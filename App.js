@@ -31,7 +31,7 @@ export default class App extends React.Component {
     }
 
     const persistor = persistStore(Store);
-    //persistor.purge();
+    persistor.purge();
     return (
       <ReduxProvider store={Store}>
         <PersistGate persistor={persistor}>
